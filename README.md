@@ -1,0 +1,53 @@
+# Physics Simulation REST-API Service
+
+## Description
+
+REST Api service exposing end-points to manage and run gravitational physics simulations.
+
+Simulation results are determined by the mass, initial position and velocity of the celestial objects that make up its data set. 
+
+The simulation itself runs for an amount of simulated time defined by the simulation entity (simulation.duration), upading position, velocity and acceleration vector values of the corresponding celestial objects every interval of time (simulation.delta_t). Celestial object positions are persisted after a given amount of updates (simulation.writing_rate).
+
+Uses Newton's law of universal gravitation for its update algorithm.
+
+![alt text](newton.png)
+
+## Author
+
+Alexis Chrétien
+
+## Dependencies
+
+* [MySQL](https://dev.mysql.com/downloads/installer/)
+* [GnuPlot](http://www.gnuplot.info/)
+
+## Utilisation
+
+```
+$ go run .
+```
+
+## Features
+* [ ] Rest Api
+    * [X] GET /simulations
+        * returns the metadata of all simulation instances
+    * [X] GET /simulations/{id}
+        * return the information of a singular simuation instance identified by {id}
+    * [X] GET /simulations/{id}/nested
+        * return the information of a singular simuation instance identified by {id} alongside its corresponding children entities (celestial objects, position history (calculated only after running the simulation))
+    * [X] GET /simulations/{id}/celestialobjects
+        * returns the information of simulation {id}'s celestial objects
+    * [X] GET /simulations/{id}/graph
+        * runs simulation {id}, returns a png picture tracing the spacial evolution of the associated celestial objects
+    * [ ] POST /simulations
+        * creates a new simulation
+    * [ ] PATCH /simulations/{id}
+        * modifies simulation {id}
+    * [ ] DELETE /simulations/{id}
+        * deletes simulation {id}
+    * [ ] POST /simulations/{id}/celestialobjects
+        * creates a new celestial object for simulation {id}
+    * [ ] PATCH /simulations/{sId}/celestialobjects/{cId}
+        * modifies celestial object {cId} of simulation {sId}
+    * [ ] DELETE /simulations/{sId}/celestialobjects/{cId}
+        * deletes celestial object {cId} of simulation {sId}
