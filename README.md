@@ -32,13 +32,13 @@ $ go run .
     * [X] GET /simulations
         * returns the metadata of all simulation instances
     * [X] GET /simulations/{id}
-        * return the information of a singular simuation instance identified by {id}
+        * returns the information ofsimulation instance {id}
     * [X] GET /simulations/{id}/nested
-        * return the information of a singular simuation instance identified by {id} alongside its corresponding children entities (celestial objects, position history (calculated only after running the simulation))
+        * returns the information of simulation instance {id} alongside its corresponding child entities (celestial objects, position history (calculated only after running the simulation))
     * [X] GET /simulations/{id}/celestialobjects
         * returns the information of simulation {id}'s celestial objects
     * [X] GET /simulations/{id}/graph
-        * runs simulation {id}, returns a png picture tracing the spacial evolution of the associated celestial objects
+        * runs simulation {id}, returns a png trace of its celestial objects' spatial evolution
     * [ ] POST /simulations
         * creates a new simulation
     * [ ] PATCH /simulations/{id}
