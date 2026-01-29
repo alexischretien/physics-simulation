@@ -2,11 +2,11 @@
 
 ## Description
 
-REST Api service exposing end-points to manage and run gravitational physics simulations.
+REST API service exposing endpoints to manage and run gravitational physics simulations.
 
-Simulation results are determined by the mass, initial position and velocity of the celestial objects that make up its data set. 
+Simulation results are determined by the mass, initial position and velocity of the celestial objects that make up its data set.
 
-The simulation itself runs for an amount of simulated time defined by the simulation entity (simulation.duration), upading position, velocity and acceleration vector values of the corresponding celestial objects every interval of time (simulation.delta_t). Celestial object positions are persisted after a given amount of updates (simulation.writing_rate).
+The simulation itself runs for an amount of simulated time defined by the simulation entity (simulation.duration), updating position, velocity and acceleration vectors of the associated celestial objects every interval of time (simulation.delta_t). Celestial object positions are persisted after a given amount of updates (simulation.writing_rate).
 
 Uses Newton's law of universal gravitation for its update algorithm.
 
@@ -30,9 +30,9 @@ $ go run .
 ## Features
 * [ ] Rest Api
     * [X] GET /simulations
-        * returns the metadata of all simulation instances
+        * returns the information of all simulation instances
     * [X] GET /simulations/{id}
-        * returns the information ofsimulation instance {id}
+        * returns the information of simulation instance {id}
     * [X] GET /simulations/{id}/nested
         * returns the information of simulation instance {id} alongside its corresponding child entities (celestial objects, position history (calculated only after running the simulation))
     * [X] GET /simulations/{id}/celestialobjects
