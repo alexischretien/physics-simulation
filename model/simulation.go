@@ -46,7 +46,9 @@ type SimulationRow struct {
 	Z                 *float64
 }
 
-func (s Simulation) Execute(celestialObjects []CelestialObject) error {
+func (s Simulation) Execute() error {
+	celestialObjects := s.CelestialObjects
+
 	if s.IsDirty == true {
 		for i, t := 0, 0.0; t < s.Duration; t += s.Delta_t {
 			if t == 0.0 {
@@ -73,22 +75,18 @@ func initDataFiles(s Simulation, celestialObjects []CelestialObject) error {
 	if err != nil {
 		return fmt.Errorf("initDataFiles for simulation %d: %v", s.Id, err)
 	}
-
 	err = os.RemoveAll(dataFolder)
 	if err != nil {
 		return fmt.Errorf("initDataFiles for simulation %d: %v", s.Id, err)
 	}
-
 	err = os.MkdirAll(dataFolder, 0700)
 	if err != nil {
 		return fmt.Errorf("initDataFiles for simulation %d: %v", s.Id, err)
 	}
-
 	gnuPlotFile, err := os.OpenFile(fmt.Sprintf("%s/gnuplot.gpi", dataFolder), os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return fmt.Errorf("initDataFiles for simulation %d: %v", s.Id, err)
 	}
-
 	strTemplate1 := "\"data/%d/%d.dat\" index 0 smooth path title \"%v\" with lines"
 	strTemplate2 := `set term png
 set size 1,1
@@ -110,7 +108,7 @@ plot `
 
 		celestialObjects[i].setDataFile(dataFile)
 		celestialObjects[i].AppendCurrentPositionToDataFile()
-		celestialObjects[i].PositionHistory = append(celestialObjects[i].PositionHistory, PositionHistory{CelestialObjectId: celestialObjects[i].Id, Time: 0.0, Position: celestialObjects[i].Position})
+		celestialObjects[i].PositionHistory = []PositionHistory{{CelestialObjectId: celestialObjects[i].Id, Time: 0.0, Position: celestialObjects[i].Position}}
 		gnuPlotFile.Write([]byte(fmt.Sprintf(strTemplate1, s.Id, id, celestialObjects[i].Name)))
 		if i < len(celestialObjects)-1 {
 			gnuPlotFile.Write([]byte(",\\\n"))

@@ -1,0 +1,11 @@
+db:
+  user: "[YOUR DB USERNAME]"
+  password: "[YOUR DB PASSWORD]"
+  address: "[YOUR DB ADDRESS]"
+  schema:
+    name: physics_simulation
+api:    
+  Port: 8082
+  Cors: true
+  AllowedHosts:
+    - http://localhost:4200
