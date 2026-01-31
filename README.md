@@ -24,7 +24,7 @@ Alexis Chrétien
 ## Utilisation
 
 ```
-$ go run .
+$ go run . serve
 ```
 
 ## Features
@@ -39,7 +39,7 @@ $ go run .
         * returns the information of simulation {id}'s celestial objects
     * [X] GET /simulations/{id}/graph
         * runs simulation {id}, returns a png trace of its celestial objects' spatial evolution
-    * [ ] POST /simulations
+    * [x] POST /simulations
         * creates a new simulation
     * [ ] PATCH /simulations/{id}
         * modifies simulation {id}

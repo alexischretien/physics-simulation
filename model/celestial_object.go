@@ -7,14 +7,14 @@ import (
 )
 
 type CelestialObject struct {
-	Id              int64
-	SimulationId    int64
-	Name            string
-	Mass            float64
-	Position        Vector
-	Velocity        Vector
-	Acceleration    Vector
-	PositionHistory []PositionHistory
+	Id              int64   `json:"id"`
+	SimulationId    int64   `json:"-"`
+	Name            string  `json:"name"`
+	Mass            float64 `json:"mass"`
+	Position        Vector  `json:"position"`
+	Velocity        Vector  `json:"velocity"`
+	acceleration    Vector
+	PositionHistory []PositionHistory `json:"positionHistory"`
 	dataFile        *os.File
 }
 
@@ -56,13 +56,13 @@ func (c *CelestialObject) UpdateAccelerationVelocityPosition(celestialObjects []
 	}
 	accGrav = accGrav.Multiply(6.6740831e-11) // grav constant
 
-	c.Acceleration = accGrav
-	c.Velocity = c.Velocity.Add(c.Acceleration.Multiply(dt))
+	c.acceleration = accGrav
+	c.Velocity = c.Velocity.Add(c.acceleration.Multiply(dt))
 	c.Position = c.Position.Add(c.Velocity.Multiply(dt))
 }
 
 func (c1 CelestialObject) Equals(c2 CelestialObject) bool {
-	return (((c1.Mass == 0.0 && c2.Mass == 0.0) || (math.Abs(c1.Mass-c2.Mass)/((c1.Mass+c2.Mass)/2) < 0.0001)) && c1.Acceleration == c2.Acceleration && c1.Velocity == c2.Velocity && c1.Position == c2.Position)
+	return (((c1.Mass == 0.0 && c2.Mass == 0.0) || (math.Abs(c1.Mass-c2.Mass)/((c1.Mass+c2.Mass)/2) < 0.0001)) && c1.acceleration == c2.acceleration && c1.Velocity == c2.Velocity && c1.Position == c2.Position)
 }
 
 func (c *CelestialObject) setDataFile(file *os.File) {

@@ -1,8 +1,6 @@
 package db
 
 import (
-	"fmt"
-
 	"physics.simulation/model"
 )
 
@@ -10,7 +8,6 @@ func (db *Database) SimulationExists(id int64) (bool, error) {
 	var nbr int64
 	row := db.QueryRow("SELECT COUNT(*) FROM simulation WHERE id = ?", id)
 	if err := row.Scan(&nbr); err != nil {
-		err = fmt.Errorf("SimulationExists: %v", err)
 		return false, err
 	}
 	return nbr != 0, nil
@@ -21,12 +18,10 @@ func (db *Database) Simulations() ([]model.Simulation, error) {
 	var sim model.Simulation
 	rows, err := db.Query("SELECT id, title, duration, delta_t, writing_rate, is_dirty FROM simulation")
 	if err != nil {
-		err = fmt.Errorf("Simulations: %v", err)
 		return nil, err
 	}
 	for rows.Next() {
 		if err := rows.Scan(&sim.Id, &sim.Title, &sim.Duration, &sim.Delta_t, &sim.WritingRate, &sim.IsDirty); err != nil {
-			err = fmt.Errorf("Simulations: %v", err)
 			return nil, err
 		}
 		sims = append(sims, sim)
@@ -38,7 +33,6 @@ func (db *Database) SimulationById(id int64) (*model.Simulation, error) {
 	var sim model.Simulation
 	row := db.QueryRow("SELECT id, title, duration, delta_t, writing_rate, is_dirty FROM simulation WHERE id = ?", id)
 	if err := row.Scan(&sim.Id, &sim.Title, &sim.Duration, &sim.Delta_t, &sim.WritingRate, &sim.IsDirty); err != nil {
-		err = fmt.Errorf("simulationByID %d: %v", id, err)
 		return nil, err
 	}
 	return &sim, nil
@@ -55,7 +49,6 @@ func (db *Database) SimulationByIdLeftJoinChildrenTables(id int64) (*model.Simul
 
 	rows, err := db.Query(query, id)
 	if err != nil {
-		err = fmt.Errorf("SimulationByIdLeftJoinChildrenTables %d: %v", id, err)
 		return nil, err
 	}
 
@@ -69,7 +62,6 @@ func (db *Database) SimulationByIdLeftJoinChildrenTables(id int64) (*model.Simul
 			&sim.CelestialObjectId, &sim.Name, &sim.Mass, &sim.X_position, &sim.Y_position, &sim.Z_position, &sim.X_velocity, &sim.Y_velocity, &sim.Z_velocity,
 			&sim.PositionHistoryId, &sim.Time, &sim.X, &sim.Y, &sim.Z)
 		if err != nil {
-			err = fmt.Errorf("SimulationByIdLeftJoinChildrenTables %d: %v", id, err)
 			return nil, err
 		}
 
@@ -111,8 +103,23 @@ func (db *Database) UpdateSimulationIsDirty(id int64, isDirty bool) error {
 
 	_, err := db.Query("UPDATE simulation set is_dirty = ? WHERE id = ?", isDirty, id)
 	if err != nil {
-		err = fmt.Errorf("UpdateSimulationIsDirty %d: %v", id, err)
 		return err
 	}
 	return nil
+}
+
+func (db *Database) CreateSimulation(s model.Simulation) (*int64, error) {
+	res, err := db.Exec(
+		`INSERT INTO simulation (title, duration, delta_t, writing_rate, is_dirty)
+		VALUES (?, ?, ?, ?, true)`,
+		s.Title, s.Duration, s.Delta_t, s.WritingRate)
+
+	if err != nil {
+		return nil, err
+	}
+	id, err := res.LastInsertId()
+	if err != nil {
+		return nil, err
+	}
+	return &id, nil
 }

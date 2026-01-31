@@ -25,7 +25,7 @@ func New(config *Config) (*Database, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Db.new: could not connect to the database: %v", err)
 	}
-	if pingErr := db.Ping(); pingErr != nil {
+	if err := db.Ping(); err != nil {
 		return nil, fmt.Errorf("Db.new: failed to ping the database: %v", err)
 	}
 	return &Database{db}, nil

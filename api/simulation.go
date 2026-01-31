@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"path/filepath"
 	"strconv"
+
+	"physics.simulation/model"
 )
 
 func (api *API) getSimulations(w http.ResponseWriter, r *http.Request) {
@@ -110,4 +112,30 @@ func (api *API) getSimulationGraphBySimulationID(w http.ResponseWriter, r *http.
 		return
 	}
 	http.ServeFile(w, r, filePath)
+}
+
+func (api *API) CreateSimulation(w http.ResponseWriter, r *http.Request) {
+	var s *model.Simulation
+	json.NewDecoder(r.Body).Decode(&s)
+
+	id, err := api.App.Database.CreateSimulation(*s)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+	if len(s.CelestialObjects) > 0 {
+		for _, c := range s.CelestialObjects {
+			_, err := api.App.Database.CreateCelestialObjectForSimulation(*id, c)
+			if err != nil {
+				http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+				return
+			}
+		}
+	}
+	s, err = api.App.Database.SimulationByIdLeftJoinChildrenTables(*id)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(s)
 }

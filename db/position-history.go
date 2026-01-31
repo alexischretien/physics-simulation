@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"strings"
 
 	"physics.simulation/model"
@@ -22,7 +21,7 @@ func (db *Database) SavePositionHistories(celestialObjects []model.CelestialObje
 
 	if len(values) > 0 {
 		if _, err := db.Exec(query, values...); err != nil {
-			return fmt.Errorf("SaveHistoryPositions: %v", err)
+			return err
 		}
 	}
 	return nil
@@ -31,7 +30,7 @@ func (db *Database) SavePositionHistories(celestialObjects []model.CelestialObje
 func (db *Database) DeletePositionHistoryForSimulationId(id int64) error {
 	_, err := db.Query("delete from position_history where id in (select id from celestial_object where simulation_id = ?)", id)
 	if err != nil {
-		return fmt.Errorf("SaveHistoryPositions: %v", err)
+		return err
 	}
 	return nil
 }

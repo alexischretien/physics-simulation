@@ -22,11 +22,12 @@ func New(app *app.App) (*API, error) {
 }
 
 func (api *API) Init(mux *http.ServeMux) {
-	mux.HandleFunc("/simulations", api.getSimulations)
-	mux.HandleFunc(`/simulations/{id}`, api.getSimulationByID)
-	mux.HandleFunc("/simulations/{id}/nested", api.getSimulationByIdNested)
-	mux.HandleFunc("/simulations/{id}/celestialobjects", api.getCelestialObjectsBySimulationByID)
-	mux.HandleFunc("/simulations/{id}/graph", api.getSimulationGraphBySimulationID)
+	mux.HandleFunc("GET /simulations", api.getSimulations)
+	mux.HandleFunc("POST /simulations", api.CreateSimulation)
+	mux.HandleFunc(`GET /simulations/{id}`, api.getSimulationByID)
+	mux.HandleFunc("GET /simulations/{id}/nested", api.getSimulationByIdNested)
+	mux.HandleFunc("GET /simulations/{id}/celestialobjects", api.getCelestialObjectsBySimulationByID)
+	mux.HandleFunc("GET /simulations/{id}/graph", api.getSimulationGraphBySimulationID)
 }
 
 func (api *API) Cors(mux *http.ServeMux) http.Handler {

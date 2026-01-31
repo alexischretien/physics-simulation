@@ -9,13 +9,13 @@ import (
 )
 
 type Simulation struct {
-	Id               int64
-	Title            string
-	Duration         float64
-	Delta_t          float64
-	WritingRate      int
-	IsDirty          bool
-	CelestialObjects []CelestialObject
+	Id               int64             `json:"id"`
+	Title            string            `json:"title"`
+	Duration         float64           `json:"duration"`
+	Delta_t          float64           `json:"delta_t"`
+	WritingRate      int               `json:"writingRate"`
+	IsDirty          bool              `json:"isDirty"`
+	CelestialObjects []CelestialObject `json:"celestialObjects"`
 }
 
 type SimulationRow struct {

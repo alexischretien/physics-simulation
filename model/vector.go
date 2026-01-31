@@ -3,9 +3,9 @@ package model
 import "math"
 
 type Vector struct {
-	X float64
-	Y float64
-	Z float64
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
+	Z float64 `json:"z"`
 }
 
 func NewVector(x float64, y float64, z float64) Vector {
