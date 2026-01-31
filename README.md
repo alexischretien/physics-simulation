@@ -28,26 +28,26 @@ $ go run . serve
 ```
 
 ## Features
-* [ ] Rest Api
+* [X] Rest Api
     * [X] GET /simulations
-        * returns the information of all simulation instances
+        * Returns the information of all simulation instances
     * [X] GET /simulations/{id}
-        * returns the information of simulation instance {id}
+        * Returns the information of simulation instance {id}
     * [X] GET /simulations/{id}/nested
-        * returns the information of simulation instance {id} alongside its corresponding child entities (celestial objects, position history (calculated only after running the simulation))
-    * [X] GET /simulations/{id}/celestialobjects
-        * returns the information of simulation {id}'s celestial objects
-    * [X] GET /simulations/{id}/graph
-        * runs simulation {id}, returns a png trace of its celestial objects' spatial evolution
-    * [x] POST /simulations
-        * creates a new simulation
-    * [ ] PATCH /simulations/{id}
-        * modifies simulation {id}
-    * [ ] DELETE /simulations/{id}
-        * deletes simulation {id}
-    * [ ] POST /simulations/{id}/celestialobjects
-        * creates a new celestial object for simulation {id}
-    * [ ] PATCH /simulations/{sId}/celestialobjects/{cId}
-        * modifies celestial object {cId} of simulation {sId}
-    * [ ] DELETE /simulations/{sId}/celestialobjects/{cId}
-        * deletes celestial object {cId} of simulation {sId}
+        * Returns the information of simulation instance {id} alongside its corresponding child entities (celestial objects, position history (calculated only after running the simulation))
+    * [X] GET /simulations/{id}/run
+        * Runs simulation {id}, returns a png trace of its celestial objects' spatial evolution
+    * [X] POST /simulations
+        * Creates a new simulation, with or without celestial objects
+    * [X] PATCH /simulations/{id}
+        * Modifies simulation {id} and its corresponding celestial objects. Deletes the celestial objects' position histories. Sets the simulation as being 'dirty' (simulation must be ran again to calculate new position histories)
+    * [X] DELETE /simulations/{id}
+        * Deletes simulation {id}, alongside its corresponding celestial objects and position histories
+
+## To-do
+* [ ] Validation on API requests
+    * [ ] max length on strings
+    * [ ] cap on duration / delta_t / writing_rate / number of celestial object in a given simulation
+* [ ] Optimization
+    * [ ] Multithreading on the simulation algorithm
+* [ ] Implementing users, security

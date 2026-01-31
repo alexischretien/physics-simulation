@@ -1,3 +1,5 @@
+USE physics_simulation;
+
 DROP TABLE IF EXISTS position_history;
 
 DROP TABLE IF EXISTS celestial_object;
@@ -30,7 +32,9 @@ CREATE TABLE celestial_object (
     y_velocity DOUBLE PRECISION NOT NULL,
     z_velocity DOUBLE PRECISION NOT NULL,
 	INDEX simulation_index (simulation_id),
-    FOREIGN KEY (simulation_id) REFERENCES simulation(id),
+    FOREIGN KEY (simulation_id) 
+        REFERENCES simulation(id)
+        ON DELETE CASCADE,
     PRIMARY KEY (`id`) 
 );
 
@@ -42,7 +46,9 @@ CREATE TABLE position_history (
     y DOUBLE PRECISION NOT NULL,
     z DOUBLE PRECISION NOT NULL,
 	INDEX celestial_object_index (celestial_object_id),
-    FOREIGN KEY (celestial_object_id) REFERENCES celestial_object(id),
+    FOREIGN KEY (celestial_object_id) 
+        REFERENCES celestial_object(id)
+        ON DELETE CASCADE,
     PRIMARY KEY (`id`) 
 );
 

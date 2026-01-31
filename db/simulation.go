@@ -123,3 +123,24 @@ func (db *Database) CreateSimulation(s model.Simulation) (*int64, error) {
 	}
 	return &id, nil
 }
+
+func (db *Database) UpdateSimulation(s model.Simulation) error {
+	_, err := db.Exec(
+		`UPDATE simulation 
+		SET title = ?, duration = ?, delta_t = ?, writing_rate = ?, is_dirty = true
+		WHERE id = ?`,
+		s.Title, s.Duration, s.Delta_t, s.WritingRate, s.Id)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (db *Database) DeleteSimulation(id int64) error {
+	_, err := db.Query("DELETE FROM simulation WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

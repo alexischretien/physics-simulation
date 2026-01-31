@@ -40,3 +40,24 @@ func (db *Database) CreateCelestialObjectForSimulation(simulationId int64, c mod
 	}
 	return &id, nil
 }
+
+func (db *Database) UpdateCelestialObject(c model.CelestialObject) error {
+	_, err := db.Exec(
+		`UPDATE celestial_object 
+		SET name = ?, mass = ?, x_position = ?, y_position = ?, z_position = ?, x_velocity = ?, y_velocity = ?, z_velocity = ?
+		WHERE id = ?`,
+		c.Name, c.Mass, c.Position.X, c.Position.Y, c.Position.Z, c.Velocity.X, c.Velocity.Y, c.Velocity.Z, c.Id)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (db *Database) DeleteCelestialObject(id int64) error {
+	_, err := db.Query("DELETE FROM celestial_object WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
