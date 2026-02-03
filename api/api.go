@@ -35,7 +35,7 @@ func (api *API) Cors(mux *http.ServeMux) http.Handler {
 	if api.Config.Cors {
 		corsMiddleware := cors.New(cors.Options{
 			AllowedOrigins:   api.Config.AllowedHosts,
-			AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+			AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE"},
 			AllowedHeaders:   []string{"Accept", "Content-Type", "Content-Length", "Authorization"},
 			AllowCredentials: true,
 			Debug:            true,

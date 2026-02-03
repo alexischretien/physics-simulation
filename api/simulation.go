@@ -177,6 +177,13 @@ func (api *API) updateSimulation(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
 		return
 	}
+	// return Simulation
+	s, err = api.App.Database.SimulationByIdLeftJoinChildrenTables(s2.Id)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(s)
 }
 
 func createCelestialObjectIdMap(s model.Simulation) map[int64]*model.CelestialObject {
