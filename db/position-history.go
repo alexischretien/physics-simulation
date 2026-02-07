@@ -28,7 +28,7 @@ func (db *Database) SavePositionHistories(celestialObjects []model.CelestialObje
 }
 
 func (db *Database) DeletePositionHistoryForSimulationId(id int64) error {
-	_, err := db.Query("delete from position_history where id in (select id from celestial_object where simulation_id = ?)", id)
+	_, err := db.Query("delete from position_history where celestial_object_id in (select id from celestial_object where simulation_id = ?)", id)
 	if err != nil {
 		return err
 	}

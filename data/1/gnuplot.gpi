@@ -7,11 +7,11 @@ set ylabel "Y (meters)"
 set output "data/1/graph.png"
 set title "Simulation trace, duration = 3.1536e+07 seconds, delta-t = 86400 seconds"
 plot "data/1/4.dat" index 0 smooth path title "Earth" with lines,\
-"data/1/6.dat" index 0 smooth path title "Jupiter" with lines,\
-"data/1/7.dat" index 0 smooth path title "Saturn" with lines,\
 "data/1/5.dat" index 0 smooth path title "Mars" with lines,\
-"data/1/8.dat" index 0 smooth path title "Uranus" with lines,\
-"data/1/9.dat" index 0 smooth path title "Neptune" with lines,\
+"data/1/7.dat" index 0 smooth path title "Saturn" with lines,\
 "data/1/1.dat" index 0 smooth path title "Sun" with lines,\
 "data/1/2.dat" index 0 smooth path title "Mercury" with lines,\
-"data/1/3.dat" index 0 smooth path title "Venus" with lines
+"data/1/3.dat" index 0 smooth path title "Venus" with lines,\
+"data/1/6.dat" index 0 smooth path title "Jupiter" with lines,\
+"data/1/8.dat" index 0 smooth path title "Uranus" with lines,\
+"data/1/9.dat" index 0 smooth path title "Neptune" with lines

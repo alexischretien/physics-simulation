@@ -6,12 +6,12 @@ set xlabel "X (meters)"
 set ylabel "Y (meters)"
 set output "data/3/graph.png"
 set title "Simulation trace, duration = 3.1536e+07 seconds, delta-t = 86400 seconds"
-plot "data/3/16.dat" index 0 smooth path title "Sun" with lines,\
-"data/3/17.dat" index 0 smooth path title "Mercury" with lines,\
-"data/3/18.dat" index 0 smooth path title "Venus" with lines,\
+plot "data/3/17.dat" index 0 smooth path title "Mercury" with lines,\
 "data/3/19.dat" index 0 smooth path title "Earth" with lines,\
-"data/3/20.dat" index 0 smooth path title "Mars" with lines,\
 "data/3/21.dat" index 0 smooth path title "Jupiter" with lines,\
+"data/3/24.dat" index 0 smooth path title "Neptune" with lines,\
+"data/3/16.dat" index 0 smooth path title "Sun" with lines,\
+"data/3/18.dat" index 0 smooth path title "Venus" with lines,\
+"data/3/20.dat" index 0 smooth path title "Mars" with lines,\
 "data/3/22.dat" index 0 smooth path title "Saturn" with lines,\
-"data/3/23.dat" index 0 smooth path title "Uranus" with lines,\
-"data/3/24.dat" index 0 smooth path title "Neptune" with lines
+"data/3/23.dat" index 0 smooth path title "Uranus" with lines
